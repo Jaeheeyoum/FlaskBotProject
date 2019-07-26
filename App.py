@@ -1,4 +1,5 @@
 from flask import Flask, render_template
+from flask import request
 
 app = Flask(__name__)
 
@@ -6,9 +7,11 @@ app = Flask(__name__)
 def index():
    return 'this is my homepage!'
 
-@app.route('/jaehee')
-def jaehee():
-    return render_template('introduction.html')
+@app.route('/profile')
+def profile():
+    address = request.args.get('address')
+    return render_template('introduction.html', address = address)
 
 if __name__ == '__main__':
    app.run()
+
