@@ -10,8 +10,8 @@ def index():
 @app.route('/profile')
 def profile():
     myName = request.args.get('name')
-    return render_template('introduction.html', mynameinHTML = myName)
+    return render_template('introduction.html', mynameinHTML= myName)
 
 if __name__ == '__main__':
-   app.run()
+   app.run(debug=True)
 
