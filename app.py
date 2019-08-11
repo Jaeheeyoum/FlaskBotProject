@@ -9,7 +9,7 @@ def index():
 
 @app.route('/profile')
 def profile():
-    return render_template('Introduction.html')
+    return render_template('introduction.html')
 
 if __name__ == '__main__':
    app.run(debug=True)
