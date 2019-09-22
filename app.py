@@ -1,34 +1,45 @@
-from flask import Flask, render_template
-from flask import request
+from flask import Flask, request, abort
+from linebot import (
+    LineBotApi, WebhookHandler
+)
+from linebot.exceptions import (
+    InvalidSignatureError
+)
+from linebot.models import (
+    MessageEvent, TextMessage, TextSendMessage,
+)
 
 app = Flask(__name__)
 
-@app.route('/')
-def index():
-   return 'this is my homepage!'
+line_bot_api = LineBotApi('j8Fj6mTrcGeDwdNiys9a1FeN+E2GVIdl11YcybRqxl78gXKN36JDt8w8P3Y4WzpwoMzt86a0zAuiOyi+Q0fLjizf8Ey+ZAjft1Beh2hm6h3L4yX/f/6QSY3JRnfEKI/PwpckLWIKOvI1URV6cvfiAQdB04t89/1O/w1cDnyilFU=')
+handler = WebhookHandler('64a670f0b7384b02b6dcb3ba1acbcd74')
 
-@app.route('/profile')
-def profile():
-    id = request.args.get ('id')
-    name = request. args.get ('name')
-    return "info : " + id + ":" + name
 
-@app.route('/register', methods=['POST'])
-def register():
-    header = request.headers['Content-Length']
+@app.route('/callback', methods=['POST'])
+def callback():
+    # get X-Line-Signature header value
+    signature = request.headers['X-Line-Signature']
+
+    # get request body as text
     body = request.get_data(as_text=True)
-    return body
+    app.logger.info("Request body: " + body)
 
-@app.route('/writeComplete', methods=['POST'])
-def writeComplete():
-    contents = request.get_data(as_text=True)
-    return render_template('writeComplete.html', contentsInHtml=contents)
+    # handle webhook body
+    try:
+        handler.handle(body, signature)
+    except InvalidSignatureError:
+        print("Invalid signature. Please check your channel access token/channel secret.")
+        abort(400)
 
-@app.route('/write')
-def write():
-    return render_template('write.html')
+    return 'OK'
+
+
+@handler.add(MessageEvent, message=TextMessage)
+def handle_message(event):
+    line_bot_api.reply_message(
+        event.reply_token,
+        TextSendMessage(text=event.message.text))
 
 
 if __name__ == '__main__':
-   app.run(debug=True)
-
+    app.run()
