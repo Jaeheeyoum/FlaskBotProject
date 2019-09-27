@@ -46,6 +46,25 @@ def handle_message(event):
         line_bot_api.reply_message(
             event.reply_token,
             TextSendMessage(text="같이 놀아요!"))
-        
+    elif "예쁘다" in event.message.text:
+        line_bot_api.reply_message(
+            event.reply_token,
+            TextSendMessage(text="꺄 고마워요!"))
+    elif "뭐먹을까" in event.message.text:
+        line_bot_api.reply_message(
+            event.reply_token,
+            TextSendMessage(text="재희님 먹고싶은거요!"))
+    if event.message.text == "잘 지냈어":
+        line_bot_api.reply_message(
+            event.reply_token,
+            TextSendMessage(text="응 보고싶었어!"))
+    if event.message.text == "사랑해":
+        line_bot_api.reply_message(
+            event.reply_token,
+            TextSendMessage(text="내가 더 많이 사랑해"))
+    if event.message.text == "잘잤어":
+        line_bot_api.reply_message(
+            event.reply_token,
+            TextSendMessage(text="응 잘잤어, 너는?"))
 if __name__ == '__main__':
     app.run()
