@@ -2,12 +2,17 @@ from flask import Flask, request, abort
 from linebot import (
     LineBotApi, WebhookHandler
 )
+import random
+
+
 from linebot.exceptions import (
     InvalidSignatureError
 )
 from linebot.models import (
     MessageEvent, TextMessage, TextSendMessage,
 )
+
+
 
 app = Flask(__name__)
 
@@ -42,19 +47,19 @@ def handle_message(event):
         line_bot_api.reply_message(
             event.reply_token,
             TextSendMessage(text="안녕하세요!"))
-    elif "재희" in event.message.text:
+    elif "언제 만날까" in event.message.text:
         line_bot_api.reply_message(
             event.reply_token,
-            TextSendMessage(text="같이 놀아요!"))
-    elif "예쁘다" in event.message.text:
+            TextSendMessage(text="지금 당장!"))
+    elif "잘생겼다" in event.message.text:
         line_bot_api.reply_message(
             event.reply_token,
-            TextSendMessage(text="꺄 고마워요!"))
+            TextSendMessage(text="고마워 너가 더 예뻐!"))
     elif "뭐먹을까" in event.message.text:
         line_bot_api.reply_message(
             event.reply_token,
-            TextSendMessage(text="재희님 먹고싶은거요!"))
-    if event.message.text == "잘 지냈어":
+            TextSendMessage(text="재희 먹고싶은거!"))
+    if event.message.text == "잘 지냈어?":
         line_bot_api.reply_message(
             event.reply_token,
             TextSendMessage(text="응 보고싶었어!"))
@@ -62,9 +67,29 @@ def handle_message(event):
         line_bot_api.reply_message(
             event.reply_token,
             TextSendMessage(text="내가 더 많이 사랑해"))
-    if event.message.text == "잘잤어":
+    if event.message.text == "잘잤어?":
         line_bot_api.reply_message(
             event.reply_token,
             TextSendMessage(text="응 잘잤어, 너는?"))
+    elif "놀러가고싶다" in event.message.text:
+        line_bot_api.reply_message(
+            event.reply_token,
+            TextSendMessage(text="응 나두 재희랑 놀러가고싶다!"))
+    elif "뭐하고 있었어?" in event.message.text:
+        line_bot_api.reply_message(
+            event.reply_token,
+            TextSendMessage(text="재희 생각!"))
+    elif "귀여워" in event.message.text:
+        line_bot_api.reply_message(
+            event.reply_token,
+            TextSendMessage(text="너가 더 귀여워 > <"))
+    elif "라면먹고갈래?" in event.message.text:
+        line_bot_api.reply_message(
+            event.reply_token,
+            TextSendMessage(text="라면만? ㅋㅋㅋ"))
+
+
+
+
 if __name__ == '__main__':
     app.run()
