@@ -42,6 +42,10 @@ def handle_message(event):
         line_bot_api.reply_message(
             event.reply_token,
             TextSendMessage(text="안녕하세요!"))
-
+    elif "재희" in event.message.text:
+        line_bot_api.reply_message(
+            event.reply_token,
+            TextSendMessage(text="같이 놀아요!"))
+        
 if __name__ == '__main__':
     app.run()
