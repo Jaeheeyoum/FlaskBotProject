@@ -87,8 +87,11 @@ def handle_message(event):
         line_bot_api.reply_message(
             event.reply_token,
             TextSendMessage(text="라면만? ㅋㅋㅋ"))
-
-
+    elif event.message.text == "가위" or event.message.text== "바위" or event.message.text== "보":
+         reply_list = ["가위", "바위", "보"]
+         line_bot_api.reply_message(
+             event.reply_token,
+             TextSendMessage(text= str(random.sample(reply_list,1)[0])))
 
 
 if __name__ == '__main__':
